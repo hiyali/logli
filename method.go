@@ -1,22 +1,18 @@
-package log
+package logli
 
 import (
 	"fmt"
 	"os"
 )
 
-func Colorful(msg string, color int) string {
-	return Render(color, Normal, msg)
-}
-
-func Special(msg string, color int, typ int) (result string) {
-	result = Render(color, typ, msg)
-	return
-}
-
-func Custom(msg string, color int, typ int) {
-	msg = Special(msg, color, typ)
+func CustomPrint(msg string, color color, typ int) {
+	msg = vary(color, typ, msg)
 	Print(msg)
+}
+
+func CustomPrintNT(msg string, color color, typ int) {
+	msg = vary(color, typ, msg)
+	fmt.Printf("%v\n", msg)
 }
 
 func Print(msg string) {
@@ -37,7 +33,7 @@ func PrintF(format string, a ...interface{}) {
 // Debug same to Print with color Cyan
 func Debug(msg string) {
 	if colorDisabled == false {
-		msg = Special(msg, Cyan, Normal)
+		msg = Colorize(msg, Color.Cyan)
 	}
 	Print(msg)
 }
@@ -46,7 +42,7 @@ func Debug(msg string) {
 func DebugF(format string, a ...interface{}) {
 	msg := fmt.Sprintf(format, a...)
 	if colorDisabled == false {
-		msg = Special(msg, Cyan, Normal)
+		msg = Colorize(msg, Color.Cyan)
 	}
 	Print(msg)
 }
@@ -54,7 +50,7 @@ func DebugF(format string, a ...interface{}) {
 // Info same to Print with color Green
 func Info(msg string) {
 	if colorDisabled == false {
-		msg = Special(msg, Green, Normal)
+		msg = Colorize(msg, Color.Green)
 	}
 	Print(msg)
 }
@@ -63,7 +59,7 @@ func Info(msg string) {
 func InfoF(format string, a ...interface{}) {
 	msg := fmt.Sprintf(format, a...)
 	if colorDisabled == false {
-		msg = Special(msg, Green, Normal)
+		msg = Colorize(msg, Color.Green)
 	}
 	Print(msg)
 }
@@ -71,7 +67,7 @@ func InfoF(format string, a ...interface{}) {
 // Warn same to Print with color Yellow
 func Warn(msg string) {
 	if colorDisabled == false {
-		msg = Special(msg, Yellow, Normal)
+		msg = Colorize(msg, Color.Yellow)
 	}
 	Print(msg)
 }
@@ -80,7 +76,7 @@ func Warn(msg string) {
 func WarnF(format string, a ...interface{}) {
 	msg := fmt.Sprintf(format, a...)
 	if colorDisabled == false {
-		msg = Special(msg, Yellow, Normal)
+		msg = Colorize(msg, Color.Yellow)
 	}
 	Print(msg)
 }
@@ -88,7 +84,7 @@ func WarnF(format string, a ...interface{}) {
 // Error same to Print with color Red
 func Error(msg string) {
 	if colorDisabled == false {
-		msg = Special(msg, Red, Normal)
+		msg = Colorize(msg, Color.Red)
 	}
 	Print(msg)
 }
@@ -97,7 +93,7 @@ func Error(msg string) {
 func ErrorF(format string, a ...interface{}) {
 	msg := fmt.Sprintf(format, a...)
 	if colorDisabled == false {
-		msg = Special(msg, Red, Normal)
+		msg = Colorize(msg, Color.Red)
 	}
 	Print(msg)
 }
